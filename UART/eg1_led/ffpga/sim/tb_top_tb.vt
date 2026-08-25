@@ -1,0 +1,82 @@
+`timescale 1ns/1ps
+
+module tb_top;
+  // Keep parameters small for simulation
+  parameter TB_CLK  = 100;
+  parameter TB_BAUD = 10;
+  localparam CLOCKS_PER_BIT = TB_CLK / TB_BAUD;
+
+  reg clk = 0;
+  reg rx  = 1;   // idle high
+  reg rst = 0;
+  wire led;
+  wire clk_en;
+  wire led_en;
+
+  // Instantiate top (connect clk/rx/rst and observe led)
+  top #(.CLK(TB_CLK), .BAUD_RATE(TB_BAUD)) uut (
+    .rx(rx),
+    .rst(rst),
+    .clk(clk),
+    .led(led),
+    .clk_en(clk_en),
+    .led_en(led_en)
+  );
+
+  // Clock
+  always #5 clk = ~clk;
+
+  initial begin
+    $dumpfile("tb_top.vcd");
+    $dumpvars(0, tb_top);
+    $display("Starting top testbench");
+    // reset pulse
+    rst = 1;
+    repeat (4) @(posedge clk);
+    rst = 0;
+    repeat (4) @(posedge clk);
+
+    $display("Sending 0xAB -> expect led = 1");
+    send_byte(8'hAB);
+    // wait for rx processing and propagation to led
+    repeat (CLOCKS_PER_BIT*12) @(posedge clk);
+    $display("Time %0t: led=%b (expected 1)", $time, led);
+
+    $display("Sending 0x12 -> expect led unchanged");
+    send_byte(8'h12);
+    repeat (CLOCKS_PER_BIT*12) @(posedge clk);
+    $display("Time %0t: led=%b (expected 1)", $time, led);
+
+    $display("Sending 0xFF -> expect led = 0");
+    send_byte(8'hFF);
+    repeat (CLOCKS_PER_BIT*12) @(posedge clk);
+    $display("Time %0t: led=%b (expected 0)", $time, led);
+
+    $display("Top testbench finished");
+    #10 $finish;
+  end
+
+  // Serial transmit task (LSB-first)
+  task send_byte(input [7:0] data);
+    integer i;
+    begin
+      // start bit
+      rx = 1'b0;
+      repeat (CLOCKS_PER_BIT) @(posedge clk);
+
+      // data bits
+      for (i = 0; i < 8; i = i + 1) begin
+        rx = data[i];
+        repeat (CLOCKS_PER_BIT) @(posedge clk);
+      end
+
+      // stop bit
+      rx = 1'b1;
+      repeat (CLOCKS_PER_BIT) @(posedge clk);
+
+      // small gap
+      repeat (CLOCKS_PER_BIT*2) @(posedge clk);
+    end
+  endtask
+
+endmodule

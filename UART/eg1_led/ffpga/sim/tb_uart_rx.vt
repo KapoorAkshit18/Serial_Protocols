@@ -1,0 +1,69 @@
+`timescale 1ns/1ps
+
+module tb_uart_rx;
+  // Small parameters for fast simulation
+  parameter TB_CLK  = 100;
+  parameter TB_BAUD = 10;
+  localparam CLOCKS_PER_BIT = TB_CLK / TB_BAUD;
+
+  reg clk = 0;
+  reg rx  = 1; // idle high
+  wire o_RX_DV;
+  wire [7:0] o_RX_Byte;
+
+  // Unit under test
+  uart_rx #(.CLK(TB_CLK), .BAUD_RATE(TB_BAUD)) uut (
+    .i_Clock(clk),
+    .i_RX_Serial(rx),
+    .o_RX_DV(o_RX_DV),
+    .o_RX_Byte(o_RX_Byte)
+  );
+
+  // Drive clock (10ns period here; arbitrary timescale)
+  always #5 clk = ~clk;
+
+  initial begin
+    $dumpfile("tb_uart_rx.vcd");
+    $dumpvars(0, tb_uart_rx);
+    $display("Starting uart_rx testbench");
+    #20;
+
+    // send 0xAB then 0xFF
+    send_byte(8'hAB);
+    repeat (CLOCKS_PER_BIT*6) @(posedge clk);
+    send_byte(8'hFF);
+    repeat (CLOCKS_PER_BIT*10) @(posedge clk);
+
+    $display("Testbench finished");
+    #10 $finish;
+  end
+
+  // Task to transmit a byte LSB-first over 'rx' with timing based on CLOCKS_PER_BIT
+  task send_byte(input [7:0] data);
+    integer i;
+    begin
+      // start bit
+      rx = 1'b0;
+      repeat (CLOCKS_PER_BIT) @(posedge clk);
+
+      // data bits (LSB first)
+      for (i = 0; i < 8; i = i + 1) begin
+        rx = data[i];
+        repeat (CLOCKS_PER_BIT) @(posedge clk);
+      end
+
+      // stop bit
+      rx = 1'b1;
+      repeat (CLOCKS_PER_BIT) @(posedge clk);
+
+      // small gap
+      repeat (CLOCKS_PER_BIT*2) @(posedge clk);
+    end
+  endtask
+
+  // Monitor received bytes
+  always @(posedge clk) begin
+    if (o_RX_DV) $display("Time %0t: uart_rx -> byte = 0x%02h", $time, o_RX_Byte);
+  end
+
+endmodule

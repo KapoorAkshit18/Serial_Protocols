@@ -1,0 +1,1 @@
+create_clk -period 20.0 -name clk [get_ports clk]

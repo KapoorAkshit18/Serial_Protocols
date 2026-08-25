@@ -1,5 +1,5 @@
-EFLX_CLK chip_tile_x=0, chip_tile_y=0, clk_side=W
-    Input=0, pin=clk
+EFLX_CLK chip_tile_x=0, chip_tile_y=0, clk_side=N
+    Input=1, pin=clk_BUFG_I_O
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=0
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=1
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=2
@@ -26,8 +26,8 @@ EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=22
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=23
     Input=0, pin=rx,  input_delay=-1
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=24
+    Input=0, pin=rst,  input_delay=-1
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=25
-   Output=0, pin=clk_en, output_delay=-1
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=26
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=27
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=28
@@ -162,7 +162,6 @@ EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=31, chip_y=4
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=31, chip_y=5
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=31, chip_y=6
    Output=0, pin=led, output_delay=-1
-   Output=1, pin=led_en, output_delay=-1
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=31, chip_y=7
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=31, chip_y=8
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=31, chip_y=9

@@ -1,4 +1,4 @@
-read_verilog -sv "../src/top.v" "../src/uart_rx.v"
+read_verilog -sv "../src/top.v"
 hierarchy -check
 flatten -noscopeinfo
 synth_xilinx -nobram -noiopad -nodsp -abc9 -widemux 5 

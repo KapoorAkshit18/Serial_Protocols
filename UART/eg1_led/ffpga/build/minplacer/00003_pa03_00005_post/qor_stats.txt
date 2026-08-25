@@ -1,4 +1,4 @@
-PostIter=10
-PlaceDly=9558
-TWL=7970
+PostIter=1
+PlaceDly=9505
+TWL=5230
 PEAKMEM=1415MB

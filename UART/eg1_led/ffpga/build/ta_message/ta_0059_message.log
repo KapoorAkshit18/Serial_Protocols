@@ -1,4 +1,4 @@
-[CRITICAL WARNING: Line=1] Unsupported constraint.
-Parsing ends with 0 notes, 0 warnings and 1 critical warnings.
+         [WARNING: Line=1] Waveform is not specified. Assume 50% duty cycle.
+Parsing ends with 0 notes, 1 warnings and 0 critical warnings.
 
 

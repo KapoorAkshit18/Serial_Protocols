@@ -166,8 +166,6 @@ module fpga_core_uart_led (
     assign #3.6 gpio_out[16] = gpio_out_16_to_delay;
 
     top dut (
-        .clk_en(osc_en),
-        .led_en(gpio_oe[16]),
         .clk(osc_clk),
         .rx(gpio_in[6]),
         .rst(gpio_in[7]),
@@ -213,6 +211,7 @@ module fpga_core_uart_led (
     assign gpio_oe[6] = 1'b0;
     assign gpio_out[7] = 1'b0;
     assign gpio_oe[7] = 1'b0;
+    assign osc_en = 1'b0;
     assign bram0_nwen = 1'b0;
     assign bram0_nwclken = 1'b0;
     assign bram0_nren = 1'b0;
@@ -464,6 +463,7 @@ module fpga_core_uart_led (
     assign gpio_oe[18] = 1'b0;
     assign gpio_out[17] = 1'b0;
     assign gpio_oe[17] = 1'b0;
+    assign gpio_oe[16] = 1'b0;
     assign gpio_out[15] = 1'b0;
     assign gpio_oe[15] = 1'b0;
     assign gpio_out[14] = 1'b0;

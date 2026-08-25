@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GPDProject version="42" oldestCompatibleVersion="32" GPDVersion="6.55.001" lastChange="25 Aug 2026 18:39:56" projectChecksumState="1" projectChecksum="ab3ae0ef">
+<GPDProject version="42" oldestCompatibleVersion="32" GPDVersion="6.55.001" lastChange="25 Aug 2026 23:48:36" projectChecksumState="1" projectChecksum="73012d7f">
     <Metadata>
         <LegalNotice>This Design was generated using Renesas' proprietary Go Configure Software Hub and is provided for use solely in connection with Renesas GreenPAK integrated circuits. Any unauthorized use, reproduction, distribution, or manufacture of this Design is prohibited. This Design is provided 'AS IS' without warranties of any kind.</LegalNotice>
     </Metadata>
@@ -619,7 +619,7 @@
             <generateBitstream>
                 <MAX_CPU>16</MAX_CPU>
                 <additionalArguments></additionalArguments>
-                <clockConcurrentOptimization>true</clockConcurrentOptimization>
+                <clockConcurrentOptimization>false</clockConcurrentOptimization>
                 <compilerVersion>23</compilerVersion>
                 <highDensityIOPacking>false</highDensityIOPacking>
                 <highDensityPackingLogic>true</highDensityPackingLogic>
@@ -648,13 +648,12 @@
         </settings>
         <openedTabs>
             <openedTab>top.v</openedTab>
-            <openedTab>uart_rx.v</openedTab>
-            <openedTab>PLL Configurator</openedTab>
             <openedTab>uart_led.sdc</openedTab>
-            <openedTab>tb_uart_rx.vt</openedTab>
+            <openedTab>Timing Analysis</openedTab>
             <openedTab>tb_top_tb.vt</openedTab>
             <openedTab>fpga_core.v</openedTab>
             <openedTab>slg47910v.v</openedTab>
+            <openedTab>I/O Planner</openedTab>
         </openedTabs>
         <pipelineStagesStates>
             <pipelineStageState>
@@ -663,17 +662,15 @@
             </pipelineStageState>
             <pipelineStageState>
                 <pipelineStage>1</pipelineStage>
-                <pipelineState>0</pipelineState>
+                <pipelineState>3</pipelineState>
             </pipelineStageState>
         </pipelineStagesStates>
         <modules>
             <scr>
                 <module filename="top.v"/>
-                <module filename="uart_rx.v"/>
             </scr>
             <lib/>
             <sim>
-                <module filename="tb_uart_rx.vt"/>
                 <module filename="tb_top_tb.vt"/>
             </sim>
             <netlists/>
@@ -687,7 +684,7 @@
             <placement-constraints/>
         </modules>
         <io-spec-tool>
-            <records filter="18">
+            <records filter="126">
                 <record id="CLK_t[0:0]_W_in0">
                     <port-name>clk</port-name>
                 </record>
@@ -698,13 +695,10 @@
                     <port-name>rst</port-name>
                 </record>
                 <record id="IOB_t[0:0]_xy[0:25]_out0">
-                    <port-name>clk_en</port-name>
+                    <port-name>clk</port-name>
                 </record>
                 <record id="IOB_t[0:0]_xy[31:6]_out0">
                     <port-name>led</port-name>
-                </record>
-                <record id="IOB_t[0:0]_xy[31:6]_out1">
-                    <port-name>led_en</port-name>
                 </record>
             </records>
         </io-spec-tool>

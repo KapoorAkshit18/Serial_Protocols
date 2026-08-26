@@ -1,4 +1,6 @@
-         [WARNING: Line=1] Waveform is not specified. Assume 50% duty cycle.
-Parsing ends with 0 notes, 1 warnings and 0 critical warnings.
+         [WARNING: Line=1] Cannot find port i_clk
+[CRITICAL WARNING: Line=1] Object i_clk hasn't found any match and is ignored.
+[CRITICAL WARNING: Line=1] No matching clock object is found in the netlist. The clock definition is ignored.
+Parsing ends with 0 notes, 1 warnings and 2 critical warnings.
 
 

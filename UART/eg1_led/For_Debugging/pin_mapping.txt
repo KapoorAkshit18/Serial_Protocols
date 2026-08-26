@@ -1,0 +1,7 @@
+clk in OSC_CLK
+
+rx in GPIO6 Input
+
+led in GPIO16_OUT
+
+rst in GPIO7

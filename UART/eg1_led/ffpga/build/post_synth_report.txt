@@ -5,21 +5,21 @@
 
         +----------Local Count, excluding submodules.
         | 
-      101 wires
-      235 wire bits
-      101 public wires
-      235 public wire bits
+       85 wires
+      187 wire bits
+       85 public wires
+      187 public wire bits
         4 ports
         4 port bits
-      104 cells
+       76 cells
         1   BUFG
-        7   CARRY4
-       38   FDRE
+        6   CARRY4
+       30   FDRE
         2   FDSE
-        5   INV
-        7   LUT2
-        5   LUT3
-       10   LUT4
-        8   LUT5
-       21   LUT6
+        4   INV
+        5   LUT2
+        2   LUT3
+        3   LUT4
+        5   LUT5
+       18   LUT6
 

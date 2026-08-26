@@ -28,7 +28,6 @@ EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=23
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=24
     Input=0, pin=rst,  input_delay=-1
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=25
-   Output=0, pin=clk, output_delay=-1
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=26
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=27
 EFLX_IOB chip_tile_x=0, chip_tile_y=0, chip_x=0, chip_y=28

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GPDProject version="40" oldestCompatibleVersion="32" GPDVersion="6.52.001" lastChange="13 Apr 2026 18:38:54" projectChecksumState="1" projectChecksum="05d74023">
+<GPDProject version="42" oldestCompatibleVersion="32" GPDVersion="6.55.001" lastChange="26 Aug 2026 23:03:13" projectChecksumState="1" projectChecksum="c39858ea">
+    <Metadata>
+        <LegalNotice>This Design was generated using Renesas' proprietary Go Configure Software Hub and is provided for use solely in connection with Renesas GreenPAK integrated circuits. Any unauthorized use, reproduction, distribution, or manufacture of this Design is prohibited. This Design is provided 'AS IS' without warranties of any kind.</LegalNotice>
+    </Metadata>
     <generalProjectSettings/>
     <chip family="04" type="06" friendlyName="FFPGA" partNumber="67" package="26">
         <nvmData registerLenght="480">0 0 0 28 0 0 0 0 A5 A5 A5 A5 0 0 0 0 0 0 0 0 5A 5A 5A 5A 0 0 0 0 22 22 22 22 22 22 22 22 22 20 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</nvmData>
@@ -114,7 +117,7 @@
         <wire output="86" input="88" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="3" wireText="NET3" wireState="0">
             <points>(220.00,70.00); (320.00,70.00)</points>
         </wire>
-        <wire output="79" input="38" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="4" wireText="NET4" wireState="0">
+        <wire output="79" input="38" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="4" wireText="NET4" wireState="0">
             <points>(220.00,80.00); (314.00,80.00); (314.00,87.00); (320.00,87.00)</points>
         </wire>
         <wire output="39" input="63" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="5" wireText="NET5" wireState="0">
@@ -201,7 +204,7 @@
         <wire output="46" input="5" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="33" wireText="NET33" wireState="0">
             <points>(320.00,202.00); (97.00,202.00)</points>
         </wire>
-        <wire output="47" input="6" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="34" wireText="NET34" wireState="0">
+        <wire output="47" input="6" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="34" wireText="NET34" wireState="0">
             <points>(320.00,153.00); (212.00,153.00)</points>
         </wire>
         <wire output="48" input="7" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="35" wireText="NET35" wireState="0">
@@ -237,7 +240,7 @@
         <wire output="58" input="17" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="45" wireText="NET45" wireState="0">
             <points>(961.00,558.00); (1177.00,558.00)</points>
         </wire>
-        <wire output="59" input="18" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="46" wireText="NET46" wireState="0">
+        <wire output="59" input="18" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="46" wireText="NET46" wireState="0">
             <points>(961.00,506.00); (1071.00,506.00)</points>
         </wire>
         <wire output="60" input="19" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="47" wireText="NET47" wireState="0">
@@ -258,7 +261,7 @@
         <wire output="65" input="24" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="52" wireText="NET52" wireState="0">
             <points>(320.00,235.00); (108.00,235.00); (108.00,248.00); (54.00,248.00); (54.00,237.00)</points>
         </wire>
-        <wire output="66" input="25" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="53" wireText="NET53" wireState="0">
+        <wire output="66" input="25" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="53" wireText="NET53" wireState="0">
             <points>(320.00,185.00); (220.00,185.00); (220.00,194.00); (169.00,194.00); (169.00,188.00)</points>
         </wire>
         <wire output="67" input="26" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="54" wireText="NET54" wireState="0">
@@ -294,7 +297,7 @@
         <wire output="77" input="36" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="64" wireText="NET64" wireState="0">
             <points>(961.00,593.00); (1172.00,593.00); (1172.00,608.00); (1219.00,608.00); (1219.00,593.00)</points>
         </wire>
-        <wire output="78" input="37" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="65" wireText="NET65" wireState="0">
+        <wire output="78" input="37" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="65" wireText="NET65" wireState="0">
             <points>(961.00,541.00); (1060.00,541.00); (1060.00,547.00); (1113.00,547.00); (1113.00,541.00)</points>
         </wire>
         <wire output="0" input="42" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="66" wireText="NET66" wireState="0">
@@ -306,13 +309,13 @@
         <wire output="2" input="44" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="19" wireText="NET19" wireState="0">
             <points>(97.00,510.00); (314.00,510.00); (314.00,514.00); (320.00,514.00)</points>
         </wire>
-        <wire output="3" input="45" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="68" wireText="NET68" wireState="0">
+        <wire output="3" input="45" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="68" wireText="NET68" wireState="0">
             <points>(212.00,460.00); (314.00,460.00); (314.00,465.00); (320.00,465.00)</points>
         </wire>
-        <wire output="4" input="46" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="69" wireText="NET69" wireState="0">
+        <wire output="4" input="46" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="69" wireText="NET69" wireState="0">
             <points>(97.00,411.00); (314.00,411.00); (314.00,416.00); (320.00,416.00)</points>
         </wire>
-        <wire output="5" input="47" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="70" wireText="NET70" wireState="0">
+        <wire output="5" input="47" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="70" wireText="NET70" wireState="0">
             <points>(97.00,213.00); (314.00,213.00); (314.00,218.00); (320.00,218.00)</points>
         </wire>
         <wire output="6" input="48" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="71" wireText="NET71" wireState="0">
@@ -345,7 +348,7 @@
         <wire output="15" input="57" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="80" wireText="NET80" wireState="0">
             <points>(1177.00,466.00); (967.00,466.00); (967.00,471.00); (961.00,471.00)</points>
         </wire>
-        <wire output="16" input="58" autoRouting="1" pen="#0293fdff;1.00;1;32;128" lineType="7" protected="1" CWLid="81" wireText="NET81" wireState="0">
+        <wire output="16" input="58" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="81" wireText="NET81" wireState="0">
             <points>(1071.00,621.00); (967.00,621.00); (967.00,628.00); (961.00,628.00)</points>
         </wire>
         <wire output="17" input="59" autoRouting="1" pen="#ff8000ff;1.00;1;32;128" lineType="2" protected="1" CWLid="82" wireText="NET82" wireState="0">
@@ -374,19 +377,6 @@
             <savedConfigurations/>
         </platform>
         <platform id="1" friendlyName="GreenPAK Advanced Development Platform">
-            <lastConfiguration modified="0">
-                <SaveEmulator Name="Default">
-                    <PowerOptions synced="0"/>
-                    <ExternalChipConnectionSource source="0"/>
-                    <PowerSwitch internalPower="1" externalPower="0"/>
-                    <ExpansionConnector></ExpansionConnector>
-                    <TestPoints/>
-                    <I2C slaveAddress="-1"/>
-                </SaveEmulator>
-            </lastConfiguration>
-            <savedConfigurations/>
-        </platform>
-        <platform id="2" friendlyName="GreenPAK Pro Development Platform">
             <lastConfiguration modified="0">
                 <SaveEmulator Name="Default">
                     <PowerOptions synced="0"/>
@@ -623,8 +613,8 @@
     </emulatorConfiguration>
     <fpga-data>
         <!--Fpga project data-->
-        <project-data-version>7</project-data-version>
-        <oldestCompatibleVersion>6</oldestCompatibleVersion>
+        <project-data-version>9</project-data-version>
+        <oldestCompatibleVersion>9</oldestCompatibleVersion>
         <settings>
             <generateBitstream>
                 <MAX_CPU>16</MAX_CPU>
@@ -637,23 +627,31 @@
                 <placeAndTrialRoute>false</placeAndTrialRoute>
                 <placeAndTrialRouteIterationCount>20</placeAndTrialRouteIterationCount>
                 <timingAnalysisCorner>0</timingAnalysisCorner>
+                <timingAnalysisLimitPaths>-1</timingAnalysisLimitPaths>
+                <timingDrivenPackingThreshold>70</timingDrivenPackingThreshold>
             </generateBitstream>
             <simulation>
                 <wavedumpOutputFormat>1</wavedumpOutputFormat>
             </simulation>
             <synthesize>
                 <additionalArguments></additionalArguments>
+                <autoname>true</autoname>
                 <enableHardMultiplexerResources>true</enableHardMultiplexerResources>
                 <flatten>true</flatten>
                 <keep>false</keep>
                 <multiplexerResourcesNumber>5</multiplexerResourcesNumber>
                 <noDSP>true</noDSP>
+                <noFSM>false</noFSM>
                 <useABC9>true</useABC9>
+                <yosysVersion>37</yosysVersion>
             </synthesize>
         </settings>
         <openedTabs>
             <openedTab>top.v</openedTab>
-            <openedTab>spi_target.v</openedTab>
+            <openedTab>I/O Planner</openedTab>
+            <openedTab>Timing Analysis</openedTab>
+            <openedTab>spi.sdc</openedTab>
+            <openedTab>spi_tb.vt</openedTab>
         </openedTabs>
         <pipelineStagesStates>
             <pipelineStageState>
@@ -667,13 +665,16 @@
         </pipelineStagesStates>
         <modules>
             <scr>
-                <module filename="spi_target.v"/>
                 <module filename="top.v"/>
             </scr>
             <lib/>
-            <sim/>
+            <sim>
+                <module filename="spi_tb.vt"/>
+            </sim>
             <netlists/>
-            <timing-constraints/>
+            <timing-constraints>
+                <module filename="spi.sdc"/>
+            </timing-constraints>
             <full-chip-simulation-models/>
             <placement-constraints/>
         </modules>
@@ -712,6 +713,7 @@
             </records>
         </io-spec-tool>
         <macrocell-mode-data>
+            <macrocell-mode-data-version>1</macrocell-mode-data-version>
             <scene-data>
                 <scene-width>32767</scene-width>
                 <scene-height>32767</scene-height>

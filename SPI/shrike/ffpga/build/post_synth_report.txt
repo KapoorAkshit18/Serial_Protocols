@@ -1,0 +1,24 @@
+
+6. Printing statistics.
+
+=== top ===
+
+   Number of wires:                 56
+   Number of wire bits:            114
+   Number of public wires:          56
+   Number of public wire bits:     114
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 65
+     BUFG                            1
+     CARRY4                          1
+     FDCE                           35
+     FDPE                            3
+     INV                             3
+     LUT2                            4
+     LUT3                            1
+     LUT4                            5
+     LUT5                            4
+     LUT6                            8
+

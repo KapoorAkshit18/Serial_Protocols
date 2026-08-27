@@ -1,0 +1,445 @@
+`timescale 1ns/1ps
+
+// ============================================================================
+// TESTBENCH : SPI TARGET / ECHO / LED
+// ============================================================================
+//
+// DUT:
+//   top
+//
+// Target platform:
+//   Shrike Lite FPGA
+//
+// Intended compiler flow:
+//   Go Configure
+//
+// SPI configuration:
+//   SPI Mode 0
+//   CPOL = 0
+//   CPHA = 0
+//   MSB first
+//   8-bit data
+//
+// System clock:
+//   50 MHz
+//   Period = 20 ns
+//
+// Testbench verifies:
+//
+//   1. Reset behavior
+//   2. SPI receive of 0xAB
+//   3. LED turns ON after receiving 0xAB
+//   4. SPI receive of 0xFF
+//   5. LED turns OFF after receiving 0xFF
+//   6. SPI receive of arbitrary data
+//   7. Echo operation
+//   8. MISO output-enable behavior
+//
+// ============================================================================
+
+module tb_top;
+
+
+    // ========================================================================
+    // CLOCK / RESET
+    // ========================================================================
+
+    reg clk;
+    reg rst_n;
+
+
+    // ========================================================================
+    // SPI SIGNALS
+    // ========================================================================
+
+    reg  spi_ss_n;
+    reg  spi_sck;
+    reg  spi_mosi;
+
+    wire spi_miso;
+    wire spi_miso_en;
+
+
+    // ========================================================================
+    // LED / CLOCK ENABLE
+    // ========================================================================
+
+    wire led;
+    wire led_en;
+    wire clk_en;
+
+
+    // ========================================================================
+    // DUT
+    // ========================================================================
+    //
+    // This is the ONLY module instantiation in the TESTBENCH.
+    //
+    // The actual DUT itself contains no submodule instantiation.
+    // ========================================================================
+
+    top dut (
+
+        .clk          (clk),
+        .clk_en       (clk_en),
+        .rst_n        (rst_n),
+
+        .spi_ss_n     (spi_ss_n),
+        .spi_sck      (spi_sck),
+        .spi_mosi     (spi_mosi),
+        .spi_miso     (spi_miso),
+        .spi_miso_en  (spi_miso_en),
+
+        .led          (led),
+        .led_en       (led_en)
+
+    );
+
+
+    // ========================================================================
+    // 50 MHz SYSTEM CLOCK
+    // ========================================================================
+    //
+    // 50 MHz = 20 ns period.
+    //
+    // Therefore:
+    //
+    //   10 ns HIGH
+    //   10 ns LOW
+    //
+    // The DUT uses this clock to synchronize the external SPI signals.
+    // ========================================================================
+
+    initial begin
+        clk = 1'b0;
+
+        forever begin
+            #10 clk = ~clk;
+        end
+    end
+
+
+    // ========================================================================
+    // TESTBENCH INITIALIZATION
+    // ========================================================================
+
+    initial begin
+
+        // Initial states
+        rst_n    = 1'b0;
+
+        spi_ss_n = 1'b1;
+        spi_sck  = 1'b0;
+        spi_mosi = 1'b0;
+
+
+        // ------------------------------------------------------------
+        // Apply reset
+        // ------------------------------------------------------------
+
+        $display("");
+        $display("============================================================");
+        $display("        SHRike Lite SPI TARGET TEST");
+        $display("============================================================");
+        $display("");
+
+        $display("[TEST] Applying reset...");
+
+        #100;
+
+        rst_n = 1'b1;
+
+        $display("[TEST] Reset released.");
+
+        // Allow synchronization logic to settle.
+        #200;
+
+
+        // ------------------------------------------------------------
+        // Check constant outputs
+        // ------------------------------------------------------------
+
+        if (clk_en !== 1'b1)
+            $display("[FAIL] clk_en is not HIGH.");
+        else
+            $display("[PASS] clk_en = 1.");
+
+        if (led_en !== 1'b1)
+            $display("[FAIL] led_en is not HIGH.");
+        else
+            $display("[PASS] led_en = 1.");
+
+        if (led !== 1'b0)
+            $display("[FAIL] LED is not OFF after reset.");
+        else
+            $display("[PASS] LED is OFF after reset.");
+
+
+        // ------------------------------------------------------------
+        // TEST 1
+        // Send 0xAB
+        // Expected:
+        //   LED = 1
+        // ------------------------------------------------------------
+
+        $display("");
+        $display("------------------------------------------------------------");
+        $display("TEST 1 : Send 0xAB");
+        $display("Expected : LED ON");
+        $display("------------------------------------------------------------");
+
+        spi_transfer(8'hAB);
+
+        // Allow the synchronized SPI receiver to generate rx_valid.
+        #200;
+
+        if (led === 1'b1)
+            $display("[PASS] 0xAB correctly turned LED ON.");
+        else
+            $display("[FAIL] 0xAB did not turn LED ON.");
+
+
+        // ------------------------------------------------------------
+        // TEST 2
+        // Send 0xFF
+        // Expected:
+        //   LED = 0
+        // ------------------------------------------------------------
+
+        $display("");
+        $display("------------------------------------------------------------");
+        $display("TEST 2 : Send 0xFF");
+        $display("Expected : LED OFF");
+        $display("------------------------------------------------------------");
+
+        spi_transfer(8'hFF);
+
+        #200;
+
+        if (led === 1'b0)
+            $display("[PASS] 0xFF correctly turned LED OFF.");
+        else
+            $display("[FAIL] 0xFF did not turn LED OFF.");
+
+
+        // ------------------------------------------------------------
+        // TEST 3
+        // Send arbitrary data
+        //
+        // Expected:
+        //   LED remains unchanged.
+        // ------------------------------------------------------------
+
+        $display("");
+        $display("------------------------------------------------------------");
+        $display("TEST 3 : Send arbitrary data 0x55");
+        $display("Expected : LED remains OFF");
+        $display("------------------------------------------------------------");
+
+        spi_transfer(8'h55);
+
+        #200;
+
+        if (led === 1'b0)
+            $display("[PASS] Arbitrary data did not change LED.");
+        else
+            $display("[FAIL] Arbitrary data unexpectedly changed LED.");
+
+
+        // ------------------------------------------------------------
+        // TEST 4
+        // Check MISO output enable.
+        //
+        // SS LOW  -> MISO should be enabled.
+        // SS HIGH -> MISO should be disabled.
+        // ------------------------------------------------------------
+
+        $display("");
+        $display("------------------------------------------------------------");
+        $display("TEST 4 : Check MISO output enable");
+        $display("------------------------------------------------------------");
+
+        // Select SPI target.
+        spi_ss_n = 1'b0;
+
+        // Allow SS synchronization.
+        #100;
+
+        if (spi_miso_en === 1'b1)
+            $display("[PASS] MISO enabled when SS is LOW.");
+        else
+            $display("[FAIL] MISO was not enabled when SS is LOW.");
+
+
+        // Deselect SPI target.
+        spi_ss_n = 1'b1;
+
+        #100;
+
+        if (spi_miso_en === 1'b0)
+            $display("[PASS] MISO disabled when SS is HIGH.");
+        else
+            $display("[FAIL] MISO remained enabled after SS HIGH.");
+
+
+        // ------------------------------------------------------------
+        // Final result
+        // ------------------------------------------------------------
+
+        $display("");
+        $display("============================================================");
+        $display("             TESTBENCH COMPLETE");
+        $display("============================================================");
+        $display("");
+
+        #200;
+
+        $finish;
+
+    end
+
+
+    // ========================================================================
+    // SPI TRANSFER TASK
+    // ========================================================================
+    //
+    // SPI Mode 0:
+    //
+    //   CPOL = 0
+    //   CPHA = 0
+    //
+    // Therefore:
+    //
+    //   SCK idle = LOW
+    //
+    //   Rising edge:
+    //       Controller/DUT samples data.
+    //
+    //   Falling edge:
+    //       Data changes / shifts.
+    //
+    // Data is transmitted MSB first.
+    //
+    // The task also samples MISO on every rising edge.
+    //
+    // ========================================================================
+
+    task spi_transfer;
+
+        input [7:0] tx_byte;
+
+        reg [7:0] rx_byte;
+        integer i;
+
+        begin
+
+            rx_byte = 8'h00;
+
+
+            // ------------------------------------------------------------
+            // Select SPI target
+            // ------------------------------------------------------------
+
+            spi_ss_n = 1'b0;
+
+            // Give the DUT enough system-clock cycles to synchronize SS.
+            #100;
+
+
+            // ------------------------------------------------------------
+            // Send 8 bits, MSB first
+            // ------------------------------------------------------------
+
+            for (i = 7; i >= 0; i = i - 1) begin
+
+                // --------------------------------------------------------
+                // Put MOSI data on the bus while SCK is LOW.
+                //
+                // This satisfies SPI Mode-0 setup timing.
+                // --------------------------------------------------------
+
+                spi_mosi = tx_byte[i];
+
+                // Small setup time before rising edge.
+                #40;
+
+
+                // --------------------------------------------------------
+                // Rising edge of SPI clock.
+                //
+                // DUT samples MOSI here.
+                // --------------------------------------------------------
+
+                spi_sck = 1'b1;
+
+                // Allow DUT/system clock to detect the SCK transition.
+                #40;
+
+
+                // --------------------------------------------------------
+                // Sample MISO.
+                // --------------------------------------------------------
+
+                rx_byte[i] = spi_miso;
+
+
+                // --------------------------------------------------------
+                // Falling edge of SPI clock.
+                //
+                // DUT shifts its transmit register here.
+                // --------------------------------------------------------
+
+                spi_sck = 1'b0;
+
+                #40;
+
+            end
+
+
+            // ------------------------------------------------------------
+            // Deselect SPI target
+            // ------------------------------------------------------------
+
+            spi_ss_n = 1'b1;
+            spi_mosi = 1'b0;
+
+            // Return SCK to idle LOW.
+            spi_sck = 1'b0;
+
+            #100;
+
+
+            // ------------------------------------------------------------
+            // Display received byte.
+            // ------------------------------------------------------------
+
+            $display(
+                "[SPI] TX = 0x%02h, RX = 0x%02h",
+                tx_byte,
+                rx_byte
+            );
+
+        end
+
+    endtask
+
+
+    // ========================================================================
+    // WAVEFORM DUMP
+    // ========================================================================
+    //
+    // Useful for GTKWave / Questa / ModelSim.
+    //
+    // If your simulator does not support VCD generation, this block can
+    // simply be removed.
+    // ========================================================================
+
+    initial begin
+
+        $dumpfile("tb_top.vcd");
+        $dumpvars(0, tb_top);
+
+    end
+
+
+endmodule

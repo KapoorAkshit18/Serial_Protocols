@@ -5,7 +5,7 @@ import time
 
 
 #Flash the bitstream into the FPGA ic
-shrike.flash("spi_loopback_led.bin")
+shrike.flash("FPGA_bitstream_MCU.bin")
 
 # --- 1. Platform-Specific Pin Routing ---
 if sys.platform == 'rp2':

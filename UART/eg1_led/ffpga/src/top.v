@@ -85,7 +85,7 @@ module top #(
     // 115207 baud. The error is very small and normally acceptable.
     // ============================================================
 
-    localparam integer CLOCKS_PER_BIT = CLK / BAUD_RATE;
+    localparam integer CLOCKS_PER_BIT = CLK / BAUD_RATE; // baud cycles
 
     // Half a UART bit period.
     //
@@ -624,7 +624,7 @@ module top #(
     // Connect internal LED register to the physical LED pin.
     assign led = led_internal;
 
-//temporary logic
+//temporary logic any data
 
 always @(posedge clk) begin
     if (rst_sync) begin
@@ -639,7 +639,7 @@ end
 
 
 
-//
+// usefull for memory mapping 
 //     always @(posedge clk) begin
 //
 //         // --------------------------------------------------------

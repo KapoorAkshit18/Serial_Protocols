@@ -1,5 +1,5 @@
 ---Clock Tree Data: After Annotation---
-clkId=0: before inv clkId -1 net=53 input=1
+clkId=0: before inv clkId -1 net=51 input=1
  clk_in:
   N index=1 x=0 y=0
  clk_out:
@@ -10,7 +10,7 @@ x=0 y=0:
   W tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   W tileClkId 1: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   N tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
-  N tileClkId 1: net=53 invNet=-1 disable=0 IO=1 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(0 0 0 0 0 0)
+  N tileClkId 1: net=51 invNet=-1 disable=0 IO=1 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 1: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  ClkOut:
@@ -32,7 +32,7 @@ x=0 y=0:
   S tileClkId 0: net=-100 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 1: net=-100 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  TileClk:
-  tileClkId 0: net=53 invNet=53 disable=0 IO=0 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(1423 0 1423 1512 0 1512)
+  tileClkId 0: net=51 invNet=51 disable=0 IO=0 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(1423 0 1423 1512 0 1512)
   tileClkId 1: net=-1 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  OutConfig:
   E tileClkId 0: Uturn=0 dir=E index=0
@@ -47,7 +47,7 @@ x=0 y=0:
   tileClkId 0: Uturn=0 dir=N index=1
   tileClkId 1: Uturn=0 dir=E index=0
 ---Clock Tree Data: After Annotation---
-clkId=0: before inv clkId -1 net=53 input=1
+clkId=0: before inv clkId -1 net=51 input=1
  clk_in:
   N index=1 x=0 y=0
  clk_out:
@@ -58,7 +58,7 @@ x=0 y=0:
   W tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   W tileClkId 1: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   N tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
-  N tileClkId 1: net=53 invNet=-1 disable=0 IO=1 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(0 0 0 0 0 0)
+  N tileClkId 1: net=51 invNet=-1 disable=0 IO=1 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 1: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  ClkOut:
@@ -80,7 +80,7 @@ x=0 y=0:
   S tileClkId 0: net=-100 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 1: net=-100 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  TileClk:
-  tileClkId 0: net=53 invNet=53 disable=0 IO=0 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(1423 0 1423 1512 0 1512)
+  tileClkId 0: net=51 invNet=51 disable=0 IO=0 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(1423 0 1423 1512 0 1512)
   tileClkId 1: net=-1 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  OutConfig:
   E tileClkId 0: Uturn=0 dir=E index=0
@@ -95,7 +95,7 @@ x=0 y=0:
   tileClkId 0: Uturn=0 dir=N index=1
   tileClkId 1: Uturn=0 dir=E index=0
 ---Clock Tree Data: After Annotation---
-clkId=0: before inv clkId -1 net=53 input=1
+clkId=0: before inv clkId -1 net=51 input=1
  clk_in:
   N index=1 x=0 y=0
  clk_out:
@@ -106,7 +106,7 @@ x=0 y=0:
   W tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   W tileClkId 1: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   N tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
-  N tileClkId 1: net=53 invNet=-1 disable=0 IO=1 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(0 0 0 0 0 0)
+  N tileClkId 1: net=51 invNet=-1 disable=0 IO=1 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 0: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 1: net=-100 invNet=-1 disable=0 IO=1 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  ClkOut:
@@ -128,7 +128,7 @@ x=0 y=0:
   S tileClkId 0: net=-100 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
   S tileClkId 1: net=-100 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  TileClk:
-  tileClkId 0: net=53 invNet=53 disable=0 IO=0 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(1423 0 1423 1512 0 1512)
+  tileClkId 0: net=51 invNet=51 disable=0 IO=0 inv=0 dlyX=0 dlyY=1 extNet=-1 accum=(1423 0 1423 1512 0 1512)
   tileClkId 1: net=-1 invNet=-1 disable=0 IO=0 inv=0 dlyX=-1 dlyY=-1 extNet=-1 accum=(0 0 0 0 0 0)
  OutConfig:
   E tileClkId 0: Uturn=0 dir=E index=0

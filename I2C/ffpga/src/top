@@ -1,0 +1,935 @@
+`timescale 1ns / 1ps
+
+// ============================================================================
+// I2C SLAVE LED CONTROLLER
+// ============================================================================
+//
+// Target:
+//     Shrike Lite FPGA
+//
+// System clock:
+//     50 MHz
+//
+// I2C clock:
+//     100 kHz
+//
+// I2C slave address:
+//     7'h32
+//
+// Supported WRITE commands:
+//
+//     8'hAA -> LED ON
+//     8'hFF -> LED OFF
+//     Other -> LED unchanged
+//
+// I2C frame:
+//
+//     START
+//       |
+//       +-- 7-bit ADDRESS + R/W
+//       |
+//       +-- SLAVE ACK
+//       |
+//       +-- DATA BYTE
+//       |
+//       +-- SLAVE ACK
+//       |
+//     STOP
+//
+// ============================================================================
+
+(* top *) module top #(
+
+    parameter [6:0] I2C_SLAVE_ADR = 7'h32
+
+) (
+
+    // ========================================================================
+    // SYSTEM
+    // ========================================================================
+
+    (* iopad_external_pin, clkbuf_inhibit *)
+    input i_clk,
+
+    (* iopad_external_pin *)
+    input i_rst,
+
+    (* iopad_external_pin *)
+    input i_en,
+
+
+    // ========================================================================
+    // I2C INPUTS
+    // ========================================================================
+
+    (* iopad_external_pin *)
+    input i_scl,
+
+    (* iopad_external_pin *)
+    input i_sda,
+
+
+    // ========================================================================
+    // I2C OUTPUTS
+    // ========================================================================
+
+    // Open-drain SDA output.
+    // Always 0.
+    (* iopad_external_pin *)
+    output o_sda,
+
+    // 1 = pull SDA LOW
+    // 0 = release SDA
+    (* iopad_external_pin *)
+    output reg o_sda_oe,
+
+
+    // ========================================================================
+    // LED
+    // ========================================================================
+
+    (* iopad_external_pin *)
+    output reg o_led,
+
+    (* iopad_external_pin *)
+    output o_led_en,
+
+
+    // ========================================================================
+    // STATUS
+    // ========================================================================
+
+    (* iopad_external_pin *)
+    output o_clk_en,
+
+    output reg [7:0] o_data_rx,
+
+    output reg o_int_rx,
+
+    output o_busy
+
+);
+
+
+    // =========================================================================
+    // CONSTANT OUTPUTS
+    // =========================================================================
+
+    // System clock enable.
+    assign o_clk_en = 1'b1;
+
+    // LED output enabled.
+    assign o_led_en = 1'b1;
+
+    // Open-drain SDA.
+    //
+    // The FPGA never drives SDA HIGH.
+    //
+    // o_sda_oe = 1 -> pull LOW
+    // o_sda_oe = 0 -> release
+    //
+    assign o_sda = 1'b0;
+
+
+    // =========================================================================
+    // FSM STATE DEFINITIONS
+    // =========================================================================
+    //
+    // 4 bits are required for 9 states.
+    //
+    // =========================================================================
+
+    localparam [3:0] ST_IDLE          = 4'd0;
+    localparam [3:0] ST_ADDR          = 4'd1;
+    localparam [3:0] ST_ADDR_ACK_WAIT = 4'd2;
+    localparam [3:0] ST_ADDR_ACK      = 4'd3;
+    localparam [3:0] ST_DATA          = 4'd4;
+    localparam [3:0] ST_DATA_ACK_WAIT = 4'd5;
+    localparam [3:0] ST_DATA_ACK      = 4'd6;
+    localparam [3:0] ST_READ          = 4'd7;
+    localparam [3:0] ST_READ_ACK      = 4'd8;
+
+
+    reg [3:0] state;
+
+
+    // =========================================================================
+    // I2C INPUT SYNCHRONIZERS
+    // =========================================================================
+    //
+    // i_scl and i_sda are asynchronous to i_clk.
+    //
+    // Three flip-flops are used to synchronize them.
+    //
+    // =========================================================================
+
+    reg [2:0] scl_sync;
+    reg [2:0] sda_sync;
+
+
+    // =========================================================================
+    // SCL EDGE DETECTION
+    // =========================================================================
+
+    wire scl_rise;
+    wire scl_fall;
+
+    assign scl_rise =
+        (~scl_sync[2]) &
+         scl_sync[1];
+
+    assign scl_fall =
+         scl_sync[2] &
+        (~scl_sync[1]);
+
+
+    // =========================================================================
+    // START DETECTION
+    // =========================================================================
+    //
+    // START:
+    //
+    //     SDA : HIGH -> LOW
+    //     SCL : HIGH
+    //
+    // =========================================================================
+
+    wire start_detect;
+
+    assign start_detect =
+        sda_sync[2] &
+       (~sda_sync[1]) &
+        scl_sync[1];
+
+
+    // =========================================================================
+    // STOP DETECTION
+    // =========================================================================
+    //
+    // STOP:
+    //
+    //     SDA : LOW -> HIGH
+    //     SCL : HIGH
+    //
+    // =========================================================================
+
+    wire stop_detect;
+
+    assign stop_detect =
+       (~sda_sync[2]) &
+        sda_sync[1] &
+        scl_sync[1];
+
+
+    // =========================================================================
+    // RECEIVE REGISTERS
+    // =========================================================================
+
+    // Complete address frame:
+    //
+    //     [7:1] = 7-bit address
+    //     [0]   = R/W
+    //
+    reg [7:0] addr_shift;
+
+    // Received data.
+    reg [7:0] rx_shift;
+
+    // Data transmitted during read.
+    reg [7:0] tx_shift;
+
+
+    // =========================================================================
+    // BIT COUNTER
+    // =========================================================================
+    //
+    // Address:
+    //
+    //     bit_count = 7 -> first bit
+    //     bit_count = 0 -> eighth bit
+    //
+    // Data:
+    //
+    //     bit_count = 7 -> first bit
+    //     bit_count = 0 -> eighth bit
+    //
+    // =========================================================================
+
+    reg [2:0] bit_count;
+
+
+    // =========================================================================
+    // ADDRESS STATUS
+    // =========================================================================
+
+    reg address_valid;
+
+    reg read_request;
+
+
+    // =========================================================================
+    // SYNCHRONIZER
+    // =========================================================================
+
+    always @(posedge i_clk) begin
+
+        if (i_rst) begin
+
+            scl_sync <= 3'b111;
+            sda_sync <= 3'b111;
+
+        end
+        else begin
+
+            scl_sync[0] <= i_scl;
+            scl_sync[1] <= scl_sync[0];
+            scl_sync[2] <= scl_sync[1];
+
+            sda_sync[0] <= i_sda;
+            sda_sync[1] <= sda_sync[0];
+            sda_sync[2] <= sda_sync[1];
+
+        end
+
+    end
+
+
+    // =========================================================================
+    // SDA OUTPUT CONTROL
+    // =========================================================================
+    //
+    // I2C is open drain.
+    //
+    // Slave can only pull SDA LOW.
+    //
+    // =========================================================================
+
+    always @* begin
+
+        // Default:
+        // Release SDA.
+
+        o_sda_oe = 1'b0;
+
+
+        case (state)
+
+            // -----------------------------------------------------------------
+            // ADDRESS ACK
+            // -----------------------------------------------------------------
+
+            ST_ADDR_ACK: begin
+
+                if (address_valid)
+                    o_sda_oe = 1'b1;
+                else
+                    o_sda_oe = 1'b0;
+
+            end
+
+
+            // -----------------------------------------------------------------
+            // DATA ACK
+            // -----------------------------------------------------------------
+
+            ST_DATA_ACK: begin
+
+                o_sda_oe = 1'b1;
+
+            end
+
+
+            // -----------------------------------------------------------------
+            // READ DATA
+            // -----------------------------------------------------------------
+
+            ST_READ: begin
+
+                // TX bit = 0:
+                // pull SDA LOW.
+                //
+                // TX bit = 1:
+                // release SDA.
+
+                if (tx_shift[7] == 1'b0)
+                    o_sda_oe = 1'b1;
+                else
+                    o_sda_oe = 1'b0;
+
+            end
+
+
+            default: begin
+
+                o_sda_oe = 1'b0;
+
+            end
+
+        endcase
+
+    end
+
+
+    // =========================================================================
+    // BUSY
+    // =========================================================================
+
+    assign o_busy = (state != ST_IDLE);
+
+
+    // =========================================================================
+    // MAIN FSM
+    // =========================================================================
+
+    always @(posedge i_clk) begin
+
+        if (i_rst) begin
+
+            // -----------------------------------------------------------------
+            // RESET
+            // -----------------------------------------------------------------
+
+            state <= ST_IDLE;
+
+            bit_count <= 3'd7;
+
+            addr_shift <= 8'h00;
+
+            rx_shift <= 8'h00;
+
+            tx_shift <= 8'h00;
+
+            address_valid <= 1'b0;
+
+            read_request <= 1'b0;
+
+            o_data_rx <= 8'h00;
+
+            o_int_rx <= 1'b0;
+
+            o_led <= 1'b0;
+
+        end
+        else begin
+
+            // -----------------------------------------------------------------
+            // Interrupt is normally LOW.
+            //
+            // It becomes HIGH for one system-clock cycle when a complete
+            // DATA byte has been received.
+            // -----------------------------------------------------------------
+
+            o_int_rx <= 1'b0;
+
+
+            case (state)
+
+
+                // =============================================================
+                // IDLE
+                // =============================================================
+
+                ST_IDLE: begin
+
+                    bit_count <= 3'd7;
+
+                    address_valid <= 1'b0;
+
+                    if (i_en && start_detect) begin
+
+                        // START detected.
+
+                        state <= ST_ADDR;
+
+                        bit_count <= 3'd7;
+
+                        addr_shift <= 8'h00;
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // ADDRESS RECEIVE
+                // =============================================================
+                //
+                // Receive:
+                //
+                //     A6 A5 A4 A3 A2 A1 A0 R/W
+                //
+                // MSB first.
+                //
+                // =============================================================
+
+                ST_ADDR: begin
+
+                    // ---------------------------------------------------------
+                    // STOP
+                    // ---------------------------------------------------------
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                        bit_count <= 3'd7;
+
+                    end
+
+
+                    // ---------------------------------------------------------
+                    // Repeated START
+                    // ---------------------------------------------------------
+
+                    else if (start_detect) begin
+
+                        state <= ST_ADDR;
+
+                        bit_count <= 3'd7;
+
+                        addr_shift <= 8'h00;
+
+                    end
+
+
+                    // ---------------------------------------------------------
+                    // Receive address bit.
+                    // ---------------------------------------------------------
+
+                    else if (scl_rise) begin
+
+                        addr_shift[bit_count] <= sda_sync[2];
+
+
+                        // -----------------------------------------------------
+                        // Last bit received.
+                        //
+                        // bit_count = 0
+                        //
+                        // IMPORTANT:
+                        //
+                        // addr_shift[0] has not yet been updated.
+                        //
+                        // Therefore we use sda_sync[2] directly as the
+                        // current final bit.
+                        // -----------------------------------------------------
+
+                        if (bit_count == 3'd0) begin
+
+                            // -------------------------------------------------
+                            // The first seven received bits are:
+                            //
+                            // A6 A5 A4 A3 A2 A1 A0
+                            //
+                            // These are stored in:
+                            //
+                            // addr_shift[7:1]
+                            //
+                            // Current bit:
+                            //
+                            // sda_sync[2] = R/W
+                            //
+                            // -------------------------------------------------
+
+                            if (addr_shift[7:1] == I2C_SLAVE_ADR) begin
+
+                                address_valid <= 1'b1;
+
+                            end
+                            else begin
+
+                                address_valid <= 1'b0;
+
+                            end
+
+
+                            // Current final bit is R/W.
+
+                            read_request <= sda_sync[2];
+
+
+                            // Wait for SCL LOW before ACK.
+
+                            state <= ST_ADDR_ACK_WAIT;
+
+                            bit_count <= 3'd7;
+
+                        end
+                        else begin
+
+                            bit_count <= bit_count - 3'd1;
+
+                        end
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // ADDRESS ACK WAIT
+                // =============================================================
+                //
+                // The 8 address bits have been received.
+                //
+                // Wait until SCL goes LOW.
+                //
+                // Then enter ST_ADDR_ACK.
+                //
+                // =============================================================
+
+                ST_ADDR_ACK_WAIT: begin
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                    end
+
+                    else if (scl_fall) begin
+
+                        if (address_valid) begin
+
+                            state <= ST_ADDR_ACK;
+
+                        end
+                        else begin
+
+                            // Wrong address.
+                            //
+                            // Do not acknowledge.
+
+                            state <= ST_IDLE;
+
+                        end
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // ADDRESS ACK
+                // =============================================================
+                //
+                // SDA is pulled LOW.
+                //
+                // This is the 9th clock.
+                //
+                // =============================================================
+
+                ST_ADDR_ACK: begin
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                    end
+
+                    else if (scl_fall) begin
+
+                        bit_count <= 3'd7;
+
+                        if (read_request) begin
+
+                            // -------------------------------------------------
+                            // READ
+                            // -------------------------------------------------
+
+                            tx_shift <= o_data_rx;
+
+                            state <= ST_READ;
+
+                        end
+                        else begin
+
+                            // -------------------------------------------------
+                            // WRITE
+                            // -------------------------------------------------
+
+                            state <= ST_DATA;
+
+                        end
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // DATA RECEIVE
+                // =============================================================
+
+                ST_DATA: begin
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                        bit_count <= 3'd7;
+
+                    end
+
+                    else if (start_detect) begin
+
+                        state <= ST_ADDR;
+
+                        bit_count <= 3'd7;
+
+                    end
+
+                    else if (scl_rise) begin
+
+                        // -----------------------------------------------------
+                        // Store current data bit.
+                        // -----------------------------------------------------
+
+                        rx_shift[bit_count] <= sda_sync[2];
+
+
+                        // -----------------------------------------------------
+                        // EIGHTH BIT
+                        // -----------------------------------------------------
+
+                        if (bit_count == 3'd0) begin
+
+                            // -------------------------------------------------
+                            // Construct COMPLETE received byte.
+                            //
+                            // rx_shift[7:1] contains first 7 bits.
+                            //
+                            // sda_sync[2] contains current final bit.
+                            //
+                            // -------------------------------------------------
+
+                            o_data_rx <= {
+                                rx_shift[7:1],
+                                sda_sync[2]
+                            };
+
+
+                            // -------------------------------------------------
+                            // Generate receive interrupt.
+                            // -------------------------------------------------
+
+                            o_int_rx <= 1'b1;
+
+
+                            // -------------------------------------------------
+                            // LED COMMAND DECODER
+                            //
+                            // 0xAA -> ON
+                            // 0xFF -> OFF
+                            // Other -> unchanged
+                            // -------------------------------------------------
+
+                            if ({
+                                rx_shift[7:1],
+                                sda_sync[2]
+                            } == 8'hAA) begin
+
+                                o_led <= 1'b1;
+
+                            end
+                            else if ({
+                                rx_shift[7:1],
+                                sda_sync[2]
+                            } == 8'hFF) begin
+
+                                o_led <= 1'b0;
+
+                            end
+
+
+                            // -------------------------------------------------
+                            // Wait for SCL LOW before ACK.
+                            // -------------------------------------------------
+
+                            state <= ST_DATA_ACK_WAIT;
+
+                            bit_count <= 3'd7;
+
+                        end
+                        else begin
+
+                            bit_count <= bit_count - 3'd1;
+
+                        end
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // DATA ACK WAIT
+                // =============================================================
+
+                ST_DATA_ACK_WAIT: begin
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                    end
+
+                    else if (scl_fall) begin
+
+                        state <= ST_DATA_ACK;
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // DATA ACK
+                // =============================================================
+                //
+                // SDA LOW during 9th clock.
+                //
+                // =============================================================
+
+                ST_DATA_ACK: begin
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                    end
+
+                    else if (start_detect) begin
+
+                        state <= ST_ADDR;
+
+                        bit_count <= 3'd7;
+
+                    end
+
+                    else if (scl_fall) begin
+
+                        // Ready for another data byte.
+
+                        state <= ST_DATA;
+
+                        bit_count <= 3'd7;
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // READ
+                // =============================================================
+
+                ST_READ: begin
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                    end
+
+                    else if (start_detect) begin
+
+                        state <= ST_ADDR;
+
+                        bit_count <= 3'd7;
+
+                    end
+
+                    else if (scl_fall) begin
+
+                        if (bit_count == 3'd0) begin
+
+                            state <= ST_READ_ACK;
+
+                            bit_count <= 3'd7;
+
+                        end
+                        else begin
+
+                            tx_shift <= {
+                                tx_shift[6:0],
+                                1'b0
+                            };
+
+                            bit_count <= bit_count - 3'd1;
+
+                        end
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // MASTER ACK AFTER READ
+                // =============================================================
+
+                ST_READ_ACK: begin
+
+                    if (stop_detect) begin
+
+                        state <= ST_IDLE;
+
+                    end
+
+                    else if (start_detect) begin
+
+                        state <= ST_ADDR;
+
+                        bit_count <= 3'd7;
+
+                    end
+
+                    else if (scl_rise) begin
+
+                        if (sda_sync[2] == 1'b0) begin
+
+                            // Master ACK.
+                            //
+                            // Send another byte.
+
+                            tx_shift <= o_data_rx;
+
+                            bit_count <= 3'd7;
+
+                            state <= ST_READ;
+
+                        end
+                        else begin
+
+                            // Master NACK.
+
+                            state <= ST_IDLE;
+
+                        end
+
+                    end
+
+                end
+
+
+                // =============================================================
+                // DEFAULT
+                // =============================================================
+
+                default: begin
+
+                    state <= ST_IDLE;
+
+                    bit_count <= 3'd7;
+
+                    address_valid <= 1'b0;
+
+                end
+
+            endcase
+
+        end
+
+    end
+
+endmodule

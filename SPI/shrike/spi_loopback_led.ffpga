@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GPDProject version="42" oldestCompatibleVersion="32" GPDVersion="6.55.001" lastChange="26 Aug 2026 23:03:13" projectChecksumState="1" projectChecksum="c39858ea">
+<GPDProject version="42" oldestCompatibleVersion="32" GPDVersion="6.55.001" lastChange="27 Aug 2026 12:46:19" projectChecksumState="1" projectChecksum="25d8dd2c">
     <Metadata>
         <LegalNotice>This Design was generated using Renesas' proprietary Go Configure Software Hub and is provided for use solely in connection with Renesas GreenPAK integrated circuits. Any unauthorized use, reproduction, distribution, or manufacture of this Design is prohibited. This Design is provided 'AS IS' without warranties of any kind.</LegalNotice>
     </Metadata>
@@ -648,9 +648,6 @@
         </settings>
         <openedTabs>
             <openedTab>top.v</openedTab>
-            <openedTab>I/O Planner</openedTab>
-            <openedTab>Timing Analysis</openedTab>
-            <openedTab>spi.sdc</openedTab>
             <openedTab>spi_tb.vt</openedTab>
         </openedTabs>
         <pipelineStagesStates>

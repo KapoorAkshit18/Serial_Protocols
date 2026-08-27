@@ -4,16 +4,16 @@
 
     Resource usage:
 
-        CLB LUT5s:    46/1120 (4.11%)
-            Lut5:                          46 (4.11%)
+        CLB LUT5s:    44/1120 (3.93%)
+            Lut5:                          44 (3.93%)
             Lut5 for Shift-register:       0 (0.00%)
             Lut5 for Distributed memory:   0 (0.00%)
 
-        FFs:    39
-        CLB FFs: 34/1120 (3.04%)
+        FFs:    45
+        CLB FFs: 40/1120 (3.57%)
         IOB FFs: 5/736 (0.68%)
 
-        CLBs:      9/140 (6.43%)
+        CLBs:      10/140 (7.14%)
         Tiles:     1/1 (100.00%)
 
         RTL Input ports:     5 
@@ -25,7 +25,7 @@
         4k BRAMs:    0/8 (0.00%)
 
         1 Clock
-           Clock 0: net    53, clk_BUFG_I_O, Fanout: 13 CLBs
+           Clock 0: net    51, clk_BUFG_I_O, Fanout: 15 CLBs
            Total 1 unique clocks
 
 ####   Resource Utilization Complete   ####
@@ -37,10 +37,10 @@ TILE-REQ:		0		0		0		1
                        140 Logic 6-LUT CLBs
                               40 CLBs support RAM/SR
 
-Usage of Logic CLBs is 6.4%.
+Usage of Logic CLBs is 7.1%.
     Logic-Memory CLB for RAM/Shift-Register is 0.0%.
-Usage of LUTs is 5.2%.
+Usage of LUTs is 5.9%.
     dual-LUTs is 1.6%.
-Usage of FF is 4.5%.
+Usage of FF is 5.5%.
     dual-FF is 1.6%.
 Usage of IO CLB is 3.8%.

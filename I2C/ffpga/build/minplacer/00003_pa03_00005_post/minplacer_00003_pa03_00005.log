@@ -1,9 +1,9 @@
-The current time is Thu Aug 27 22:15:33 2026
+The current time is Fri Aug 28 12:43:38 2026
 CPUs=4
 EXE="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe"
 BuildDir=C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23
 BuildPath="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23"
-CWD=C:\Users\akshi\AppData\Local\Temp\xCZfZHjU\out\minplacer\00003_pa03_00005_post
+CWD=C:\Users\akshi\AppData\Local\Temp\yPUdrhlA\out\minplacer\00003_pa03_00005_post
 LogFile=minplacer_00003_pa03_00005.log
 PrintScreen=..\_00003_pa03_stdout.txt
 Command line: C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe -print_screen ..\_00003_pa03_stdout.txt -eflx_call_minplacer 00003_pa03_00005_post__out__top
@@ -189,8 +189,8 @@ Short connection estimation: ...........
 [ITER=9] WNS=-8459,M=5.229 TNS=-627443 x PathNumObj=4 ***&&&&&
 [ITER=10] WNS=-8459,M=5.229 TNS=-627443 PathNumObj=2 ***&&&&&
 [ITER=11] WNS=-8459,M=5.229 TNS=-627443 x PathNumObj=4 
-(2) IMPROVED TWL = 13030(7580, 5450) ELAPSE=7
-(3) FIN TWL = 13030(7580, 5450) ELAPSE=7
+(2) IMPROVED TWL = 13030(7580, 5450) ELAPSE=5
+(3) FIN TWL = 13030(7580, 5450) ELAPSE=5
 CROSS-TILE STAT: [0]=401
 Wrote 26 RBB-locations out of 26 core insts and 0 chained insts to EFLX file ..\..\minplacer\00003_pa03_00005_post\minplacer_rbbloc.txt.
 Wrote 10 RBB-locations out of 10 IOB insts to EFLX file ..\..\minplacer\00003_pa03_00005_post\minplacer_rbbloc.txt.
@@ -240,10 +240,10 @@ Placement timing:
 
 POST ENDS
 pProblemFin.
-Min-placement step ends: Detaild placement (mode=2). Runtime: 0:0:15 (CPU time), 0:0:15 (real time); peak memory: 1415MB.
+Min-placement step ends: Detaild placement (mode=2). Runtime: 0:0:10 (CPU time), 0:0:10 (real time); peak memory: 1415MB.
 
 
-The current time is Thu Aug 27 22:15:48 2026
+The current time is Fri Aug 28 12:43:48 2026
 
 
 

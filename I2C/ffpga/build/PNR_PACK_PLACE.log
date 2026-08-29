@@ -133186,7 +133186,7 @@
     ],
     "ram_inst_list": [],
     "ram_inverted_clk_net": [],
-    "sdc_cache": "",
+    "sdc_cache": "create_clock -period 20.0 -name clk [get_ports {i_clk}]\n\n",
     "ta_process_corner": "TSMC 40nm ULP tt1p1v25c_Typical",
     "timing_trace": [
       [
@@ -267976,7 +267976,7 @@
     ],
     "ram_inst_list": [],
     "ram_inverted_clk_net": [],
-    "sdc_cache": "",
+    "sdc_cache": "create_clock -period 20.0 -name clk [get_ports {i_clk}]\n\n",
     "ta_process_corner": "TSMC 40nm ULP tt1p1v25c_Typical",
     "timing_trace": [
       [

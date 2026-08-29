@@ -17,7 +17,7 @@ Improving the placement of 5 instances for resource type(s) of IOB: ............
 Legalizing chains on RBB-L: Legalizing chains of RBB-L:  Len=2.(10|0) *
 Legalizing non-chains of RBB-L: .(16,0|0,0)
 Improving the placement of 26 instances for resource type(s) of RBB-L RBB-M: .............................................................................................................
-Min-placement step ends: Global placement and legalization. Runtime: 0:0:15 (CPU time), 0:0:15 (real time); peak memory: 1304MB.
+Min-placement step ends: Global placement and legalization. Runtime: 0:0:10 (CPU time), 0:0:10 (real time); peak memory: 1304MB.
 
 
 There are 38 instances. After combining instances in chains, there are 36 instances to place.
@@ -61,7 +61,7 @@ Placement timing:
          i_clk  <UDEF_i_clk>                    95.621 
 
 
-Min-placement step ends: Detaild placement (mode=2). Runtime: 0:0:15 (CPU time), 0:0:15 (real time); peak memory: 1415MB.
+Min-placement step ends: Detaild placement (mode=2). Runtime: 0:0:10 (CPU time), 0:0:10 (real time); peak memory: 1415MB.
 
 
 There are 38 instances. After combining instances in chains, there are 36 instances to place.

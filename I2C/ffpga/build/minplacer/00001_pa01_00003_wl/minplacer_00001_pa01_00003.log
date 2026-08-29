@@ -1,15 +1,15 @@
-LOG STARTS The current time is Thu Aug 27 22:15:05 2026
+LOG STARTS The current time is Fri Aug 28 12:43:15 2026
 TA took 0 seconds.
-LOG ENDS The current time is Thu Aug 27 22:15:07 2026
+LOG ENDS The current time is Fri Aug 28 12:43:18 2026
 
 
 
-The current time is Thu Aug 27 22:15:08 2026
+The current time is Fri Aug 28 12:43:18 2026
 CPUs=4
 EXE="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe"
 BuildDir=C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23
 BuildPath="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23"
-CWD=C:\Users\akshi\AppData\Local\Temp\xCZfZHjU\out\minplacer\00001_pa01_00003_wl
+CWD=C:\Users\akshi\AppData\Local\Temp\yPUdrhlA\out\minplacer\00001_pa01_00003_wl
 LogFile=minplacer_00001_pa01_00003.log
 PrintScreen=..\_00001_pa01_stdout.txt
 Command line: C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe -print_screen ..\_00001_pa01_stdout.txt -eflx_call_minplacer 00001_pa01_00003_wl__out__top
@@ -165,7 +165,7 @@ pDelayLibIni. pdelay_estimate_pppff_delay=120
 TileRange read: File is not given. Use whole chip.
 Reading timing_def file ..\..\minplacer\00001_pa01_00002_setup\minplacer.timing_def
 pPipeAlloc: OptMode=1 PppFfInsertDone=0 MinPipeRtDly=98 #Chain=0 AveChainLen=0.0 MaxChainLen=0 #Net=0 AveChainFan=0.0 MaxChainFan=0 #MixedZeroFan=0 Opt_UseLatency=0 OptLine_RightSlack_WorseThreshold=100
-(0): Ini TileRange={0,1; 0,1}. IsTiny=0 IsLowUtil=0. CurMem=237432832 PeakMem=371437568
+(0): Ini TileRange={0,1; 0,1}. IsTiny=0 IsLowUtil=0. CurMem=237424640 PeakMem=371396608
 ALWAYS_CLKPLC=0
 RandomPlacement ends.
 FORCE(1): Initial random illegal placement generated.
@@ -184,8 +184,8 @@ PANN_TILERANGE LayerMask=4 TileRange={0,1; 0,1} RangeDivider=4 WL=7677 (3664, 40
 PANN_TILERANGE ENDS TIMESPENT=0
 PANN_TILERANGE LayerMask=40 TileRange={0,1; 0,1} RangeDivider=3 WL=7677 (3664, 4013) StartingIter=0 NumIters=1
 Improving the placement of 5 instances for resource type(s) of IOB: ...............................................................................................................
-PANN_TILERANGE  (iter=0) WL=4524 (1614, 2910) TIMESPENT=0
-PANN_TILERANGE ENDS TIMESPENT=0
+PANN_TILERANGE  (iter=0) WL=4524 (1614, 2910) TIMESPENT=1
+PANN_TILERANGE ENDS TIMESPENT=1
 PANN_TILERANGE LayerMask=40 TileRange={0,1; 0,1} RangeDivider=5 WL=7273 (3104, 4169) StartingIter=0 NumIters=1
 Improving the placement of 5 instances for resource type(s) of IOB: ...............................................................................................................
 PANN_TILERANGE  (iter=0) WL=3379 (1524, 1855) TIMESPENT=0
@@ -194,8 +194,8 @@ PANN_TILERANGE LayerMask=2 TileRange={0,1; 0,1} RangeDivider=4 WL=7165 (3431, 37
 PANN_TILERANGE ENDS TIMESPENT=0
 PANN_TILERANGE LayerMask=40 TileRange={0,1; 0,1} RangeDivider=3 WL=7165 (3431, 3734) StartingIter=0 NumIters=1
 Improving the placement of 5 instances for resource type(s) of IOB: ...............................................................................................................
-PANN_TILERANGE  (iter=0) WL=4145 (1435, 2710) TIMESPENT=1
-PANN_TILERANGE ENDS TIMESPENT=1
+PANN_TILERANGE  (iter=0) WL=4145 (1435, 2710) TIMESPENT=0
+PANN_TILERANGE ENDS TIMESPENT=0
 PANN_TILERANGE LayerMask=40 TileRange={0,1; 0,1} RangeDivider=5 WL=11463 (7023, 4440) StartingIter=0 NumIters=1
 Improving the placement of 5 instances for resource type(s) of IOB: ...............................................................................................................
 PANN_TILERANGE  (iter=0) WL=9522 (7034, 2488) TIMESPENT=0
@@ -203,8 +203,8 @@ PANN_TILERANGE ENDS TIMESPENT=0
 PANN_TILERANGE LayerMask=1 TileRange={0,1; 0,1} RangeDivider=4 WL=22090 (7200, 14890) StartingIter=0 NumIters=1
 PANN_TILERANGE Add LAYER_M to the layermask.
 Improving the placement of 26 instances for resource type(s) of RBB-L RBB-M: .............................................................................................................
-PANN_TILERANGE  (iter=0) WL=11270 (5080, 6190) TIMESPENT=6
-PANN_TILERANGE ENDS TIMESPENT=6
+PANN_TILERANGE  (iter=0) WL=11270 (5080, 6190) TIMESPENT=5
+PANN_TILERANGE ENDS TIMESPENT=5
 CROSS-TILE STAT: [0]=401
 Wrote 26 RBB-locations out of 26 core insts and 0 chained insts to EFLX file ..\..\minplacer\00001_pa01_00003_wl\minplacer_rbbloc.txt.
 Wrote 10 RBB-locations out of 10 IOB insts to EFLX file ..\..\minplacer\00001_pa01_00003_wl\minplacer_rbbloc.txt.
@@ -253,12 +253,12 @@ Placement timing:
 
 
 pDelayLibFin
-(90): Fin. CurMem=35209216 PeakMem=371437568
+(90): Fin. CurMem=32366592 PeakMem=371396608
 pProblemFin.
 Min-placement step ends: Global placement and legalization. Runtime: 0:0:15 (CPU time), 0:0:15 (real time); peak memory: 1304MB.
 
 
-The current time is Thu Aug 27 22:15:23 2026
+The current time is Fri Aug 28 12:43:33 2026
 
 
 

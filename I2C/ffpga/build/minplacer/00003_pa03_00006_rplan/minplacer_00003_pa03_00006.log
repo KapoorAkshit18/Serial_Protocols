@@ -1,9 +1,9 @@
-The current time is Thu Aug 27 22:15:48 2026
+The current time is Fri Aug 28 12:43:48 2026
 CPUs=4
 EXE="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe"
 BuildDir=C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23
 BuildPath="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23"
-CWD=C:\Users\akshi\AppData\Local\Temp\xCZfZHjU\out\minplacer\00003_pa03_00006_rplan
+CWD=C:\Users\akshi\AppData\Local\Temp\yPUdrhlA\out\minplacer\00003_pa03_00006_rplan
 LogFile=minplacer_00003_pa03_00006.log
 PrintScreen=..\_00003_pa03_stdout.txt
 Command line: C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe -print_screen ..\_00003_pa03_stdout.txt -eflx_call_minplacer 00003_pa03_00006_rplan__out__top
@@ -219,7 +219,7 @@ pProblemFin.
 Min-placement step ends: Delay and congestion estimation (fastest_delay=0 gentable=0 mode=1). Runtime: 0:0:10 (CPU time), 0:0:10 (real time); peak memory: 1374MB.
 
 
-The current time is Thu Aug 27 22:15:58 2026
+The current time is Fri Aug 28 12:43:58 2026
 
 
 

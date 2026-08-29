@@ -1,0 +1,5 @@
+[CRITICAL WARNING: Line=1] Object i_clk hasn't found any match and is ignored.
+[CRITICAL WARNING: Line=1] No matching clock object is found in the netlist. The clock definition is ignored.
+Parsing ends with 0 notes, 0 warnings and 2 critical warnings.
+
+

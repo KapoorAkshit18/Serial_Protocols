@@ -1,9 +1,9 @@
-The current time is Thu Aug 27 22:15:33 2026
+The current time is Fri Aug 28 12:43:43 2026
 CPUs=4
 EXE="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe"
 BuildDir=C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23
 BuildPath="C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23"
-CWD=C:\Users\akshi\AppData\Local\Temp\xCZfZHjU\out\minplacer\00001_pa01_00005_post
+CWD=C:\Users\akshi\AppData\Local\Temp\yPUdrhlA\out\minplacer\00001_pa01_00005_post
 LogFile=minplacer_00001_pa01_00005.log
 PrintScreen=..\_00001_pa01_stdout.txt
 Command line: C:\Program Files\Renesas Electronics\Go Configure Software Hub\external\eda-placer\v23\eda-placer.exe -print_screen ..\_00001_pa01_stdout.txt -eflx_call_minplacer 00001_pa01_00005_post__out__top
@@ -172,11 +172,11 @@ pPipeAlloc: OptMode=1 PppFfInsertDone=0 MinPipeRtDly=98 #Chain=0 AveChainLen=0.0
 CROSS-TILE STAT: [0]=401
 PANN_TILERANGE LayerMask=40 TileRange={0,1; 0,1} RangeDivider=4 WL=11270 (5080, 6190) StartingIter=0 NumIters=1
 Improving the placement of 5 instances for resource type(s) of IOB: ...............................................................................................................
-PANN_TILERANGE  (iter=0) WL=11260 (5070, 6190) TIMESPENT=0
-PANN_TILERANGE ENDS TIMESPENT=0
+PANN_TILERANGE  (iter=0) WL=11260 (5070, 6190) TIMESPENT=1
+PANN_TILERANGE ENDS TIMESPENT=1
 Long connection estimation: ..........
 Short connection estimation: ...........
-(1) IOS-ANN TWL = 11260(5070, 6190) ELAPSE=1
+(1) IOS-ANN TWL = 11260(5070, 6190) ELAPSE=2
 [ITER=0] WNS=-9641,M=5.820 TNS=-648300 PathNumObj=4 *
 [ITER=1] WNS=-9150,M=5.575 TNS=-645831 PathNumObj=3 ***&&&&&
 [ITER=2] WNS=-9150,M=5.575 TNS=-645831 x PathNumObj=5 *
@@ -196,8 +196,8 @@ Short connection estimation: ...........
 [ITER=16] WNS=-8258,M=5.129 TNS=-601492 PathNumObj=4 ***&&&&&
 [ITER=17] WNS=-8258,M=5.129 TNS=-601492 PathNumObj=4 ***&&&&&
 [ITER=18] WNS=-8258,M=5.129 TNS=-601492 PathNumObj=4 
-(2) IMPROVED TWL = 12080(5430, 6650) ELAPSE=13
-(3) FIN TWL = 12080(5430, 6650) ELAPSE=13
+(2) IMPROVED TWL = 12080(5430, 6650) ELAPSE=11
+(3) FIN TWL = 12080(5430, 6650) ELAPSE=11
 CROSS-TILE STAT: [0]=401
 Wrote 26 RBB-locations out of 26 core insts and 0 chained insts to EFLX file ..\..\minplacer\00001_pa01_00005_post\minplacer_rbbloc.txt.
 Wrote 10 RBB-locations out of 10 IOB insts to EFLX file ..\..\minplacer\00001_pa01_00005_post\minplacer_rbbloc.txt.
@@ -247,10 +247,10 @@ Placement timing:
 
 POST ENDS
 pProblemFin.
-Min-placement step ends: Detaild placement (mode=2). Runtime: 0:0:20 (CPU time), 0:0:20 (real time); peak memory: 1415MB.
+Min-placement step ends: Detaild placement (mode=2). Runtime: 0:0:15 (CPU time), 0:0:15 (real time); peak memory: 1415MB.
 
 
-The current time is Thu Aug 27 22:15:53 2026
+The current time is Fri Aug 28 12:43:58 2026
 
 
 

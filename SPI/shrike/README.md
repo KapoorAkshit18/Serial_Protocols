@@ -19,7 +19,6 @@ You will learn how to implement an SPI target (slave) in FPGA and perform bidire
 | Shrike-Lite (RP2040) | `firmware/micropython/` |       -       |
 
 
-> FPGA bitstream is the same across all boards.
 
 ## Hardware Setup
 

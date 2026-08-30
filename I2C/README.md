@@ -15,10 +15,8 @@ This example demonstrates controlling an LED on the FPGA using I2C communication
 | Board                | Firmware                | Status        |
 | -------------------- | ----------------------- | ------------- |
 | Shrike-Lite (RP2040) | `firmware/micropython/` | ✅ Tested      |
-| Shrike (RP2350)      | `firmware/micropython/` | ✅ Tested      |
-| Shrike-fi (ESP32-S3) | `firmware/micropython/` |   Not Tested   |
 
-> FPGA bitstream is the same across all boards.
+
 
 ## Hardware Setup
 

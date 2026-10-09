@@ -109,3 +109,19 @@ Sent 0xFF (LED OFF)
 ```
 
 The LED responds immediately to I2C commands.
+
+## I2C protocol reference
+
+![I2C start, address, R/W, ACK, data, ACK, and stop sequence](output/i2c_protocol_reference.png)
+
+Protocol diagram source: Rohde & Schwarz, [R&S RTM User Manual, Figure 11-4: I2C write access with 7-bit address](https://scdn.rohde-schwarz.com/ur/pws/dl_downloads/dl_common_library/dl_manuals/dl_user_manual/RTM_UserManual_en.pdf). The diagram illustrates the I²C transaction structure; the project waveform below shows this design's signals.
+
+## Project waveform
+
+![Project I2C waveform capture](output/i2c_project_waveform.png)
+
+This is the project waveform image supplied for this example. It shows the address and data stimulus, the slave's low ACK level, the state progression, and the LED response. The cursor shows address `0x32`, data `0xAA`, and `ack_value=0` (ACK).
+
+The full testbench trace is available as [`output/i2c_tb.vcd`](output/i2c_tb.vcd). A separately rendered view of the first write transaction is available as [`output/i2c_simulation_waveform.png`](output/i2c_simulation_waveform.png); regenerate it with [`output/render_i2c_waveform.py`](output/render_i2c_waveform.py). The simulation uses [`ffpga/sim/tb_top.vt`](ffpga/sim/tb_top.vt) and `ffpga/src/top`.
+
+The existing testbench simulation passed its valid-address LED checks for `0xAA`, `0x55`, `0xFF`, and `0xAA` again. It also received NACKs for the wrong address (`0x18`) and confirmed that the LED stayed on. These checks are reported by the testbench in the simulator console.

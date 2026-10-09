@@ -154,3 +154,31 @@ This confirms:
 * SPI operates in full-duplex mode (simultaneous read/write)
 * Loopback helps verify communication integrity
 * Ensure correct reset handling before communication
+
+---
+
+## SPI waveform comparison and debug notes
+
+### Final capture
+
+![Final SPI waveform showing receive, valid pulse, LED, and SPI bus signals](spi_waveform_final.png)
+
+The final capture is the clearest one to use as the project reference. It shows the SPI pins alongside the internal receive shift register, state, bit counter, completed-byte register, `rx_valid_pulse`, and LED. The earlier capture is retained here for comparison:
+
+![Earlier GTKWave SPI capture](spi_waveform_gtk.png)
+
+Both captures show the same key sequence and agree with the RTL/testbench for SPI Mode 0 (CPOL=0, CPHA=0), 8-bit MSB-first transfers:
+
+| MOSI command | Completed byte / valid event | Expected LED | Waveform result |
+| --- | --- | --- | --- |
+| `0xAB` | `rx_completed_byte_reg = AB`, one-cycle `rx_valid_pulse` | On | LED goes high |
+| `0xFF` | `rx_completed_byte_reg = FF`, one-cycle `rx_valid_pulse` | Off | LED goes low |
+| `0x55` | `rx_completed_byte_reg = 55`, one-cycle `rx_valid_pulse` | Unchanged | LED stays low |
+
+The receive shift register visibly builds each byte as the SPI clock edges are sampled, and `bit_count` advances through the eight received bits before the completed-byte/valid indication. The LED changes after the completed byte is decoded. This matches the RTL's explicit use of the completed-byte register, which avoids decoding the old shift-register value on the same clock edge that receives the final bit.
+
+### What the waveform says about debugging
+
+The capture documents a useful signal-tracing method: observe the external bus (`spi_ss_n`, `spi_sck`, `spi_mosi`) together with internal milestones (`state`, `bit_count`, `rx_data_wire`, completed byte, valid pulse), then follow the result to `led`. That makes it possible to localize a failure to bus timing/bit order, byte assembly, valid timing, or command decode. The waveform supports that this sequence was checked this way; it cannot establish the exact steps or order in which the debugging was originally performed.
+
+The existing `ffpga/sim/spi_tb.vt` provides the stimulus and checks reset, the three LED behaviors, and MISO output-enable behavior. It displays sampled MISO bytes but does not assert an expected loopback byte, so this waveform alone should not be treated as a complete proof of echo correctness.

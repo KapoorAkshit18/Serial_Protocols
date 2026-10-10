@@ -120,7 +120,7 @@ Protocol diagram source: Rohde & Schwarz, [R&S RTM User Manual, Figure 11-4: I2C
 
 ![Project I2C waveform capture](output/i2c_project_waveform.png)
 
-This is the project waveform image supplied for this example. It shows the address and data stimulus, the slave's low ACK level, the state progression, and the LED response. The cursor shows address `0x32`, data `0xAA`, and `ack_value=0` (ACK).
+This is the project waveform image for this example. It shows the address and data stimulus, the slave's low ACK level, the state progression, and the LED response. The cursor shows address `0x32`, data `0xAA`, and `ack_value=0` (ACK).
 
 The full testbench trace is available as [`output/i2c_tb.vcd`](output/i2c_tb.vcd). A separately rendered view of the first write transaction is available as [`output/i2c_simulation_waveform.png`](output/i2c_simulation_waveform.png); regenerate it with [`output/render_i2c_waveform.py`](output/render_i2c_waveform.py). The simulation uses [`ffpga/sim/tb_top.vt`](ffpga/sim/tb_top.vt) and `ffpga/src/top`.
 

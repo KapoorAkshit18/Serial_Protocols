@@ -14,7 +14,7 @@ This example demonstrates controlling an LED on the FPGA using I2C communication
 
 | Board                | Firmware                | Status        |
 | -------------------- | ----------------------- | ------------- |
-| Shrike-Lite (RP2040) | `firmware/micropython/` | ✅ Tested      |
+| Shrike-Lite (RP2040) | `firmware/micropython/` |  Tested      |
 
 
 
